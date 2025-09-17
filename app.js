@@ -17952,7 +17952,7 @@ S(function () {
       S("#cookie_check").fadeOut(200);
     }),
     S(document).on("click", "#btn_menu", function () {
-      Tc(),
+      tc(),
         S("#header").toggleClass("active"),
         S("#block_menu").hasClass("on")
           ? setTimeout(function () {
