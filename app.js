@@ -10228,10 +10228,10 @@ function hs() {
     : S("#news").length
     ? (S("#gradient").addClass("child").removeClass("home nothing"),
       S("#gradient albana-gradient").attr({
-        color1: "#d6d6d6ff",
-        color2: "#50535eff",
-        color3: "#007896ff",
-        color4: "#000653ff",
+        color1: "#c2c2c2ff",
+        color2: "#ffffffff",
+        color3: "#4b4b4bff",
+        color4: "#474747ff",
         colorsize: 0.69,
         colorspacing: 0.33,
         colorrotation: 1.24840734641021,
@@ -10245,10 +10245,10 @@ function hs() {
     : S("#work").length
     ? (S("#gradient").addClass("child").removeClass("home nothing"),
       S("#gradient albana-gradient").attr({
-        color1: "#f8f8ec",
-        color2: "#066699",
-        color3: "#3c769a",
-        color4: "#0f4266",
+        color1: "#940000ff",
+        color2: "#ff6600ff",
+        color3: "#ff0000ff",
+        color4: "#410000ff",
         colorsize: 2.18,
         colorspacing: 0.37,
         colorrotation: 0.368407346410207,
@@ -15256,19 +15256,6 @@ var Yu = {
       });
   });
 })(Yu);
-/*! @vimeo/player v2.23.0 | (c) 2024 Vimeo | MIT License | https://github.com/vimeo/player.js */
-function Xo(s, i) {
-  var r = Object.keys(s);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(s);
-    i &&
-      (o = o.filter(function (e) {
-        return Object.getOwnPropertyDescriptor(s, e).enumerable;
-      })),
-      r.push.apply(r, o);
-  }
-  return r;
-}
 
 function Yo(s) {
   for (var i = 1; i < arguments.length; i++) {
@@ -15986,39 +15973,6 @@ function rc(s) {
   return !isNaN(parseFloat(s)) && isFinite(s) && Math.floor(s) == s;
 }
 
-function Ln(s) {
-  return /^(https?:)?\/\/((((player|www)\.)?vimeo\.com)|((player\.)?[a-zA-Z0-9-]+\.videoji\.hk))(?=$|\/)/.test(
-    s
-  );
-}
-
-function Us(s) {
-  var i =
-    /^https:\/\/player\.((vimeo\.com)|([a-zA-Z0-9-]+\.videoji\.hk))\/video\/\d+/;
-  return i.test(s);
-}
-
-function ic(s) {
-  var i = (s || "").match(/^(?:https?:)?(?:\/\/)?([^/?]+)/),
-    r = ((i && i[1]) || "").replace("player.", "");
-  return r.endsWith(".videoji.hk") ? r : "vimeo.com";
-}
-
-function Vs() {
-  var s = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {},
-    i = s.id,
-    r = s.url,
-    o = i || r;
-  if (!o)
-    throw new Error(
-      "An id or url must be passed, either in an options object or as a data-vimeo-id or data-vimeo-url attribute."
-    );
-  if (rc(o)) return "https://vimeo.com/".concat(o);
-  if (Ln(o)) return o.replace("http:", "https:");
-  throw i
-    ? new TypeError("“".concat(i, "” is not a valid video id."))
-    : new TypeError("“".concat(o, "” is not a vimeo.com url."));
-}
 var Qo = function (i, r, o) {
     var e =
         arguments.length > 3 && arguments[3] !== void 0
@@ -16044,10 +15998,6 @@ var Qo = function (i, r, o) {
   },
   oc = typeof Array.prototype.indexOf < "u",
   sc = typeof window < "u" && typeof window.postMessage < "u";
-if (!Ws && (!oc || !sc))
-  throw new Error(
-    "Sorry, the Vimeo Player API is not available in this browser."
-  );
 var Vn =
   typeof globalThis < "u"
     ? globalThis
@@ -16537,195 +16487,10 @@ var fc = [
   "transcript",
   "transparent",
   "url",
-  "vimeo_logo",
   "volume",
   "watch_full_video",
   "width",
 ];
-
-function Gs(s) {
-  var i = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-  return fc.reduce(function (r, o) {
-    var e = s.getAttribute("data-vimeo-".concat(o));
-    return (e || e === "") && (r[o] = e === "" ? 1 : e), r;
-  }, i);
-}
-
-function no(s, i) {
-  var r = s.html;
-  if (!i) throw new TypeError("An element must be provided");
-  if (i.getAttribute("data-vimeo-initialized") !== null)
-    return i.querySelector("iframe");
-  var o = document.createElement("div");
-  return (
-    (o.innerHTML = r),
-    i.appendChild(o.firstChild),
-    i.setAttribute("data-vimeo-initialized", "true"),
-    i.querySelector("iframe")
-  );
-}
-
-function Xs(s) {
-  var i = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {},
-    r = arguments.length > 2 ? arguments[2] : void 0;
-  return new Promise(function (o, e) {
-    if (!Ln(s)) throw new TypeError("“".concat(s, "” is not a vimeo.com url."));
-    var n = ic(s),
-      l = "https://"
-        .concat(n, "/api/oembed.json?url=")
-        .concat(encodeURIComponent(s));
-    for (var d in i)
-      i.hasOwnProperty(d) &&
-        (l += "&".concat(d, "=").concat(encodeURIComponent(i[d])));
-    var p =
-      "XDomainRequest" in window ? new XDomainRequest() : new XMLHttpRequest();
-    p.open("GET", l, !0),
-      (p.onload = function () {
-        if (p.status === 404) {
-          e(new Error("“".concat(s, "” was not found.")));
-          return;
-        }
-        if (p.status === 403) {
-          e(new Error("“".concat(s, "” is not embeddable.")));
-          return;
-        }
-        try {
-          var v = JSON.parse(p.responseText);
-          if (v.domain_status_code === 403) {
-            no(v, r), e(new Error("“".concat(s, "” is not embeddable.")));
-            return;
-          }
-          o(v);
-        } catch (T) {
-          e(T);
-        }
-      }),
-      (p.onerror = function () {
-        var v = p.status ? " (".concat(p.status, ")") : "";
-        e(
-          new Error(
-            "There was an error fetching the embed code from Vimeo".concat(
-              v,
-              "."
-            )
-          )
-        );
-      }),
-      p.send();
-  });
-}
-
-function dc() {
-  var s =
-      arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : document,
-    i = [].slice.call(s.querySelectorAll("[data-vimeo-id], [data-vimeo-url]")),
-    r = function (e) {
-      "console" in window &&
-        console.error &&
-        console.error("There was an error creating an embed: ".concat(e));
-    };
-  i.forEach(function (o) {
-    try {
-      if (o.getAttribute("data-vimeo-defer") !== null) return;
-      var e = Gs(o),
-        n = Vs(e);
-      Xs(n, e, o)
-        .then(function (l) {
-          return no(l, o);
-        })
-        .catch(r);
-    } catch (l) {
-      r(l);
-    }
-  });
-}
-
-function hc() {
-  var s =
-    arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : document;
-  if (!window.VimeoPlayerResizeEmbeds_) {
-    window.VimeoPlayerResizeEmbeds_ = !0;
-    var i = function (o) {
-      if (Ln(o.origin) && !(!o.data || o.data.event !== "spacechange")) {
-        for (var e = s.querySelectorAll("iframe"), n = 0; n < e.length; n++)
-          if (e[n].contentWindow === o.source) {
-            var l = e[n].parentElement;
-            l.style.paddingBottom = "".concat(o.data.data[0].bottom, "px");
-            break;
-          }
-      }
-    };
-    window.addEventListener("message", i);
-  }
-}
-
-function pc() {
-  var s =
-    arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : document;
-  if (!window.VimeoSeoMetadataAppended) {
-    window.VimeoSeoMetadataAppended = !0;
-    var i = function (o) {
-      if (Ln(o.origin)) {
-        var e = ei(o.data);
-        if (!(!e || e.event !== "ready"))
-          for (var n = s.querySelectorAll("iframe"), l = 0; l < n.length; l++) {
-            var d = n[l],
-              p = d.contentWindow === o.source;
-            if (Us(d.src) && p) {
-              var v = new ro(d);
-              v.callMethod("appendVideoMetadata", window.location.href);
-            }
-          }
-      }
-    };
-    window.addEventListener("message", i);
-  }
-}
-
-function gc() {
-  var s =
-    arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : document;
-  if (!window.VimeoCheckedUrlTimeParam) {
-    window.VimeoCheckedUrlTimeParam = !0;
-    var i = function (e) {
-        "console" in window &&
-          console.error &&
-          console.error("There was an error getting video Id: ".concat(e));
-      },
-      r = function (e) {
-        if (Ln(e.origin)) {
-          var n = ei(e.data);
-          if (!(!n || n.event !== "ready"))
-            for (
-              var l = s.querySelectorAll("iframe"),
-                d = function () {
-                  var T = l[p],
-                    P = T.contentWindow === e.source;
-                  if (Us(T.src) && P) {
-                    var E = new ro(T);
-                    E.getVideoId()
-                      .then(function (q) {
-                        var N = new RegExp(
-                          "[?&]vimeo_t_".concat(q, "=([^&#]*)")
-                        ).exec(window.location.href);
-                        if (N && N[1]) {
-                          var M = decodeURI(N[1]);
-                          E.setCurrentTime(M);
-                        }
-                      })
-                      .catch(i);
-                  }
-                },
-                p = 0;
-              p < l.length;
-              p++
-            )
-              d();
-        }
-      };
-    window.addEventListener("message", r);
-  }
-}
 
 function mc() {
   var s = (function () {
@@ -17296,8 +17061,6 @@ var vc = {
         var e = i.querySelector("iframe");
         e && (i = e);
       }
-      if (i.nodeName === "IFRAME" && !Ln(i.getAttribute("src") || ""))
-        throw new Error("The player element passed isn’t a Vimeo embed.");
       if (zn.has(i)) return zn.get(i);
       (this._window = i.ownerDocument.defaultView),
         (this.element = i),
@@ -17577,9 +17340,6 @@ var vc = {
               if (
                 (Pi.delete(r),
                 zn.delete(r.element),
-                r._originalElement &&
-                  (zn.delete(r._originalElement),
-                  r._originalElement.removeAttribute("data-vimeo-initialized")),
                 r.element &&
                   r.element.nodeName === "IFRAME" &&
                   r.element.parentNode &&
@@ -17593,21 +17353,11 @@ var vc = {
                 r.element &&
                   r.element.nodeName === "DIV" &&
                   r.element.parentNode)
-              ) {
-                r.element.removeAttribute("data-vimeo-initialized");
-                var e = r.element.querySelector("iframe");
-                e &&
-                  e.parentNode &&
-                  (e.parentNode.parentNode &&
-                  r._originalElement &&
-                  r._originalElement !== e.parentNode
-                    ? e.parentNode.parentNode.removeChild(e.parentNode)
-                    : e.parentNode.removeChild(e));
-              }
-              r._window.removeEventListener("message", r._onMessage),
-                ot.isEnabled &&
-                  ot.off("fullscreenchange", r.fullscreenchangeHandler),
-                o();
+              )
+                r._window.removeEventListener("message", r._onMessage),
+                  ot.isEnabled &&
+                    ot.off("fullscreenchange", r.fullscreenchangeHandler),
+                  o();
             });
           },
         },
@@ -17920,7 +17670,6 @@ var vc = {
       s
     );
   })();
-Ws || ((ot = mc()), dc(), hc(), pc(), gc());
 window.ww = window.innerWidth;
 window.wh = window.innerHeight;
 const bt = 767;
@@ -17962,12 +17711,6 @@ S(function () {
     }),
     S(document).on("click", ".js-menu_close", function () {
       S("#header").removeClass("active"), S("#block_menu").removeClass("on");
-    }),
-    S(document).on("click", ".js-play_vimeo", function () {
-      S(this).parents(".thum").addClass("on");
-      var s = S(this).parents(".thum").next("iframe"),
-        i = new ro(s[0]);
-      i.play();
     }),
     S(document).on("click", ".js-play_yt", function () {
       S(this).parents(".thum").addClass("on"),
